@@ -7,7 +7,6 @@ import java.util.logging.Logger;
  * User: alex
  * Date: 24/11/2007
  * Time: 00:26:03
- * Copyright: Insight Solution
  */
 public class Solver {
     public static final Logger LOGGER = Logger.getLogger(Solver.class.getName());

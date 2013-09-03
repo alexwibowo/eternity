@@ -9,7 +9,6 @@ import java.util.logging.Logger;
  * User: alex
  * Date: 22/11/2007
  * Time: 20:12:58
- * Copyright: Insight Solution
  */
 public class Board {
     public static final Logger LOGGER = Logger.getLogger(Board.class.getName());

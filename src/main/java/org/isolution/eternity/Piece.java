@@ -6,7 +6,6 @@ import java.util.logging.Logger;
  * User: alex
  * Date: 22/11/2007
  * Time: 20:13:15
- * Copyright: Insight Solution
  */
 public class Piece {
     public static final Logger LOGGER = Logger.getLogger(Piece.class.getName());

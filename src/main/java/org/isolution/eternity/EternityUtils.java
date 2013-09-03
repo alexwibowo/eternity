@@ -7,7 +7,6 @@ import java.util.ArrayList;
  * User: alex
  * Date: 24/11/2007
  * Time: 00:20:54
- * Copyright: Insight Solution
  */
 public class EternityUtils {
     /**

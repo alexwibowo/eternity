@@ -6,7 +6,6 @@ import org.isolution.util.StreamUtils;
  * User: alex
  * Date: 22/11/2007
  * Time: 21:58:33
- * Copyright: Insight Solution
  */
 public class Main {
 
