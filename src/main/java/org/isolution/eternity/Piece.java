@@ -1,6 +1,5 @@
 package org.isolution.eternity;
 
-import java.util.Collections;
 import java.util.logging.Logger;
 
 /**
@@ -53,12 +52,47 @@ public class Piece {
         return getTop() == colour || getRight() == colour || getBottom() == colour || getLeft() == colour;
     }
 
+    public boolean hasColoursOfItsNeighbours(Piece leftNeighbour, Piece topNeighbour, Piece rightNeighbour, Piece bottomNeighbour ) {
+        return hasColourOfLeftSide(leftNeighbour) &&
+                hasColourOfTopSide(topNeighbour) &&
+                hasColourOfRightSide(rightNeighbour) &&
+                hasColourOfBottomSide(bottomNeighbour);
+    }
+
+    public boolean hasColourOfLeftSide(Piece pieceToTheLeft) {
+        if (pieceToTheLeft != null && !this.hasColour(pieceToTheLeft.getRight())) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean hasColourOfRightSide(Piece pieceToTheRight) {
+        if (pieceToTheRight != null && !this.hasColour(pieceToTheRight.getLeft())) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean hasColourOfBottomSide(Piece pieceToTheBottom) {
+        if (pieceToTheBottom != null && !this.hasColour(pieceToTheBottom.getTop())) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean hasColourOfTopSide(Piece pieceToTheTop) {
+        if (pieceToTheTop != null && !this.hasColour(pieceToTheTop.getBottom())) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Rotate the piece clockwise
      *
      * @param times the number of time this piece is to be rotated (clockwise)
      */
-    public void rotate(byte times) {
+    public void rotate(int times) {
 //        byte[] newside =  null;
         if (times == 1) {
             this.sides = new byte[]{sides[3], sides[0], sides[1], sides[2]};
@@ -169,67 +203,24 @@ public class Piece {
      *         see if this piece can fit in the middle), and also try to rotate this piece so that it matches
      *         the configuration of the parameters
      */
-    public boolean isCompatible(final Piece top, final Piece right, final Piece bottom, final Piece left) {
-        if (left != null && !this.hasColour(left.getRight())) {
+    public boolean tryToFitWithNeighbours(final Piece top, final Piece right, final Piece bottom, final Piece left) {
+        if (!hasColoursOfItsNeighbours(left, top, right, bottom)) {
             return false;
         }
 
-        Collections.addAll(null);
-
-
-        if (right != null && !this.hasColour(right.getLeft())) {
-            return false;
-        }
-        if (top != null && !this.hasColour(top.getBottom())) {
-            return false;
-        }
-        if (bottom != null && !this.hasColour(bottom.getTop())) {
-            return false;
-        }
-
-
-        boolean compatible = false;
-
-        for (byte i = 1; i <= 4; i++) {
-            // At the start, we have to reset all matching condition
-
-            if (top == null || fitsAtTop(top)) {
-            } else if (i < 4) {
-                rotate(i);
-                continue;
+        for (int i = 0; i < 4; i++) {
+            if (
+                    (top == null || fitsAtTop(top)) &&
+                            (right == null || fitsAtRight(right)) &&
+                            (bottom == null || fitsAtBottom(bottom)) &&
+                            (left == null || fitsAtLeft(left))
+                    ) {
+                return true;
             } else {
-                return false;
+                rotate(1);
             }
-
-
-            if (right == null || fitsAtRight(right)) {
-            } else if (i < 4) {
-                rotate(i);
-                continue;
-            } else {
-                return false;
-            }
-
-            if (bottom == null || fitsAtBottom(bottom)) {
-            } else if (i < 4) {
-                rotate(i);
-                continue;
-            } else {
-                return false;
-            }
-
-            if (left == null || fitsAtLeft(left)) {
-            } else if (i < 4) {
-                rotate(i);
-
-                continue;
-            } else {
-                return false;
-            }
-            return true;
         }
-
-        return compatible;
+        return false;
     }
 
 

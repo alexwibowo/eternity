@@ -66,7 +66,7 @@ public class PieceTest extends TestCase {
             Piece rightPiece = new Piece((byte) 20, (byte) 30, (byte) 40, (byte) 2);
             Piece bottomPiece = new Piece((byte) 3, (byte) 30, (byte) 40, (byte) 50);
             Piece leftPiece = new Piece((byte) 20, (byte) 4, (byte) 40, (byte) 50);
-            assertTrue("Compatibility test failed on rotation " + i,centerPiece.isCompatible(topPiece, rightPiece, bottomPiece, leftPiece));
+            assertTrue("Compatibility test failed on rotation " + i,centerPiece.tryToFitWithNeighbours(topPiece, rightPiece, bottomPiece, leftPiece));
             assertEquals("Piece must fit after compatibility test - top piece does not fit", (byte)1, centerPiece.getTop());
             assertEquals("Piece must fit after compatibility test - right piece does not fit", (byte)2, centerPiece.getRight());
             assertEquals("Piece must fit after compatibility test - bottom piece does not fit", (byte)3, centerPiece.getBottom());
@@ -86,7 +86,7 @@ public class PieceTest extends TestCase {
             Piece rightPiece = null;
             Piece bottomPiece = new Piece((byte) 3, (byte) 30, (byte) 40, (byte) 50);
             Piece leftPiece = new Piece((byte) 20, (byte) 4, (byte) 40, (byte) 50);
-            assertTrue("Compatibility test failed on rotation " + i,centerPiece.isCompatible(topPiece, rightPiece, bottomPiece, leftPiece));
+            assertTrue("Compatibility test failed on rotation " + i,centerPiece.tryToFitWithNeighbours(topPiece, rightPiece, bottomPiece, leftPiece));
             assertEquals("Piece must fit after compatibility test - top piece does not fit", (byte)1, centerPiece.getTop());
             assertEquals("Piece must fit after compatibility test - right piece does not fit", (byte)2, centerPiece.getRight());
             assertEquals("Piece must fit after compatibility test - bottom piece does not fit", (byte)3, centerPiece.getBottom());
@@ -106,7 +106,7 @@ public class PieceTest extends TestCase {
             Piece rightPiece = new Piece((byte) 20, (byte) 30, (byte) 40, (byte) 20);
             Piece bottomPiece = new Piece((byte) 30, (byte) 30, (byte) 40, (byte) 50);
             Piece leftPiece = new Piece((byte) 20, (byte) 40, (byte) 40, (byte) 50);
-            assertFalse("Compatibility test failed on rotation " + i,centerPiece.isCompatible(topPiece, rightPiece, bottomPiece, leftPiece));
+            assertFalse("Compatibility test failed on rotation " + i,centerPiece.tryToFitWithNeighbours(topPiece, rightPiece, bottomPiece, leftPiece));
 
             // Rotate and test again on the rotation
             centerPiece.rotate((byte)i);

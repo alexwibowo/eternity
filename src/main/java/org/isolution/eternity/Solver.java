@@ -64,17 +64,6 @@ public class Solver {
                 || position == Board.Position.BOTTOM_EDGE) {
             piecesToUse = board.getEdgePieces();
         }else {
-            // For inner pieces, we search from possible colours only
-            /*if (position == Board.Position.LEFT || position == Board.Position.TOP_LEFT_INNER) {
-               piecesToUse = board.getInnerPiecesForColour(leftPiece.getRight());
-            }else if (position == Board.Position.TOP || position == Board.Position.TOP_RIGHT_INNER) {
-                piecesToUse = board.getInnerPiecesForColour(topPiece.getBottom());
-            }else if (position == Board.Position.RIGHT || position == Board.Position.BOTTOM_RIGHT_INNER) {
-                piecesToUse = board.getInnerPiecesForColour(rightPiece.getLeft());
-            }else if (position == Board.Position.BOTTOM || position == Board.Position.BOTTOM_LEFT_INNER) {
-                piecesToUse = board.getInnerPiecesForColour(bottomPiece.getTop());
-            }*/
-
             // For inner pieces, for middle pieces we can check against two colours at once
             if (position == Board.Position.TOP_LEFT_INNER) {
                piecesToUse = board.getInnerPiecesForColour(leftPiece.getRight(), topPiece.getBottom());
@@ -111,8 +100,8 @@ public class Solver {
         for (int i = 0; i < piecesLength; i++) {
             Piece nextPiece = piecesToUse[i];
             if (!nextPiece.isPlaced()
-                    && nextPiece.isCompatible(
-                        topPiece, rightPiece, bottomPiece, leftPiece)) {
+                    && nextPiece.tryToFitWithNeighbours(topPiece, rightPiece, bottomPiece, leftPiece)
+                    ) {
                 if (LOGGER.isLoggable(Level.FINEST)) {
                     LOGGER.log(Level.FINEST, "Piece " + i + "     : " + nextPiece + " fits at (" + x + "," + y + ")");
                 }
@@ -231,7 +220,7 @@ public class Solver {
             }
             for (Piece piece : piecesToUse) {
                 if (!piece.isPlaced() &&
-                        piece.isCompatible(topPiece, rightPiece, bottomPiece, leftPiece)) {
+                        piece.tryToFitWithNeighbours(topPiece, rightPiece, bottomPiece, leftPiece)) {
                     return false;
                 }
             }
